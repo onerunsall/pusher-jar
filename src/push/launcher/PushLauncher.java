@@ -26,7 +26,7 @@ public class PushLauncher {
 
 	JPushClient jPushClient = null;
 
-	public void registerMeisheng(String masterSecret, String appKey) {
+	public void registerJiGuang(String masterSecret, String appKey) {
 		jPushClient = new JPushClient(masterSecret, appKey);
 	}
 
