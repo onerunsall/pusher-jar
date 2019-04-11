@@ -30,16 +30,19 @@ public class PushLauncher {
 		jPushClient = new JPushClient(masterSecret, appKey);
 	}
 
-	public void sendNotification(String[] alias,  String notification)
+	public void sendNotification(String[] alias, String notification)
 			throws APIConnectionException, APIRequestException {
 		sendNotification(Arrays.asList(alias), notification);
 	}
 
-	public void sendNotification(List<String> alias,  String notification)
+	public void sendNotification(List<String> alias, String notification)
 			throws APIConnectionException, APIRequestException {
 		jPushClient.sendPush(PushPayload.newBuilder().setNotification(Notification.alert(notification))
 				.setPlatform(Platform.all()).setAudience(Audience.alias(alias))
 				.setOptions(Options.newBuilder().setApnsProduction(true).build()).build());
 	}
 
+	public void sendNotificationAll(String notification) throws APIConnectionException, APIRequestException {
+		jPushClient.sendNotificationAll(notification);
+	}
 }
