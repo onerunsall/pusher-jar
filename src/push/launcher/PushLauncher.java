@@ -25,6 +25,33 @@ public class PushLauncher {
 	private static Logger logger = Logger.getLogger(PushLauncher.class);
 
 	JPushClient jPushClient = null;
+	boolean prod = false;
+	boolean test = false;
+	boolean dev = true;
+
+	public boolean isProd() {
+		return prod;
+	}
+
+	public void setProd(boolean prod) {
+		this.prod = prod;
+	}
+
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
+	public boolean isDev() {
+		return dev;
+	}
+
+	public void setDev(boolean dev) {
+		this.dev = dev;
+	}
 
 	public void registerJiGuang(String masterSecret, String appKey) {
 		jPushClient = new JPushClient(masterSecret, appKey);
@@ -39,7 +66,7 @@ public class PushLauncher {
 			throws APIConnectionException, APIRequestException {
 		jPushClient.sendPush(PushPayload.newBuilder().setNotification(Notification.alert(notification))
 				.setPlatform(Platform.all()).setAudience(Audience.alias(alias))
-				.setOptions(Options.newBuilder().setApnsProduction(true).build()).build());
+				.setOptions(Options.newBuilder().setApnsProduction(prod).build()).build());
 	}
 
 	public void sendNotificationAll(String notification) throws APIConnectionException, APIRequestException {
