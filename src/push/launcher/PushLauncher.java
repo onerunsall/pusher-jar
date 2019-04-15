@@ -59,10 +59,22 @@ public class PushLauncher {
 
 	public void sendNotification(String[] alias, String notification)
 			throws APIConnectionException, APIRequestException {
-		sendNotification(Arrays.asList(alias), notification);
+		sendNotificationByAlias(Arrays.asList(alias), notification);
 	}
 
-	public void sendNotification(List<String> alias, String notification)
+	public void sendNotificationByTags(String[] tags, String notification)
+			throws APIConnectionException, APIRequestException {
+		sendNotificationByTags(Arrays.asList(tags), notification);
+	}
+
+	public void sendNotificationByTags(List<String> tags, String notification)
+			throws APIConnectionException, APIRequestException {
+		jPushClient.sendPush(PushPayload.newBuilder().setNotification(Notification.alert(notification))
+				.setPlatform(Platform.all()).setAudience(Audience.tag(tags))
+				.setOptions(Options.newBuilder().setApnsProduction(prod).build()).build());
+	}
+
+	public void sendNotificationByAlias(List<String> alias, String notification)
 			throws APIConnectionException, APIRequestException {
 		jPushClient.sendPush(PushPayload.newBuilder().setNotification(Notification.alert(notification))
 				.setPlatform(Platform.all()).setAudience(Audience.alias(alias))
