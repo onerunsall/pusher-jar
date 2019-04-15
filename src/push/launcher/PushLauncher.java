@@ -57,7 +57,7 @@ public class PushLauncher {
 		jPushClient = new JPushClient(masterSecret, appKey);
 	}
 
-	public void sendNotification(String[] alias, String notification)
+	public void sendNotificationByAlias(String[] alias, String notification)
 			throws APIConnectionException, APIRequestException {
 		sendNotificationByAlias(Arrays.asList(alias), notification);
 	}
