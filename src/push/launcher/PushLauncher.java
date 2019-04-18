@@ -1,9 +1,8 @@
 package push.launcher;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -83,5 +82,15 @@ public class PushLauncher {
 
 	public void sendNotificationAll(String notification) throws APIConnectionException, APIRequestException {
 		jPushClient.sendNotificationAll(notification);
+	}
+
+	public List<String> getTags() throws APIConnectionException, APIRequestException {
+		List tags = jPushClient.getTagList().tags;
+		return tags == null ? new ArrayList<String>() : tags;
+	}
+
+	public boolean tagExist(String tag) throws APIConnectionException, APIRequestException {
+		List<String> tags = getTags();
+		return tags.contains(tag);
 	}
 }
