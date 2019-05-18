@@ -75,6 +75,7 @@ public class PushLauncher {
 
 	public void sendNotificationByAlias(List<String> alias, String notification)
 			throws APIConnectionException, APIRequestException {
+		logger.info("notification : " + notification + " " + alias);
 		jPushClient.sendPush(PushPayload.newBuilder().setNotification(Notification.alert(notification))
 				.setPlatform(Platform.all()).setAudience(Audience.alias(alias))
 				.setOptions(Options.newBuilder().setApnsProduction(prod).build()).build());
