@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import cn.jpush.api.JPushClient;
@@ -56,33 +57,43 @@ public class PushLauncher {
 		jPushClient = new JPushClient(masterSecret, appKey);
 	}
 
-	public void sendNotificationByAlias(String[] alias, String notification)
-			throws APIConnectionException, APIRequestException {
+	public void sendNotificationByAlias(String[] alias, String notification) {
 		sendNotificationByAlias(Arrays.asList(alias), notification);
 	}
 
-	public void sendNotificationByTag(String[] tags, String notification)
-			throws APIConnectionException, APIRequestException {
+	public void sendNotificationByTag(String[] tags, String notification) {
 		sendNotificationByTag(Arrays.asList(tags), notification);
 	}
 
-	public void sendNotificationByTag(List<String> tags, String notification)
-			throws APIConnectionException, APIRequestException {
-		jPushClient.sendPush(PushPayload.newBuilder().setNotification(Notification.alert(notification))
-				.setPlatform(Platform.all()).setAudience(Audience.tag(tags))
-				.setOptions(Options.newBuilder().setApnsProduction(prod).build()).build());
+	public void sendNotificationByTag(List<String> tags, String notification) {
+		try {
+			logger.info("notification : " + notification + " " + tags);
+			jPushClient.sendPush(PushPayload.newBuilder().setNotification(Notification.alert(notification))
+					.setPlatform(Platform.all()).setAudience(Audience.tag(tags))
+					.setOptions(Options.newBuilder().setApnsProduction(prod).build()).build());
+		} catch (Exception e) {
+			logger.info(ExceptionUtils.getStackTrace(e));
+		}
 	}
 
-	public void sendNotificationByAlias(List<String> alias, String notification)
-			throws APIConnectionException, APIRequestException {
-		logger.info("notification : " + notification + " " + alias);
-		jPushClient.sendPush(PushPayload.newBuilder().setNotification(Notification.alert(notification))
-				.setPlatform(Platform.all()).setAudience(Audience.alias(alias))
-				.setOptions(Options.newBuilder().setApnsProduction(prod).build()).build());
+	public void sendNotificationByAlias(List<String> alias, String notification) {
+		try {
+			logger.info("notification : " + notification + " " + alias);
+			jPushClient.sendPush(PushPayload.newBuilder().setNotification(Notification.alert(notification))
+					.setPlatform(Platform.all()).setAudience(Audience.alias(alias))
+					.setOptions(Options.newBuilder().setApnsProduction(prod).build()).build());
+		} catch (Exception e) {
+			logger.info(ExceptionUtils.getStackTrace(e));
+		}
 	}
 
-	public void sendNotificationAll(String notification) throws APIConnectionException, APIRequestException {
-		jPushClient.sendNotificationAll(notification);
+	public void sendNotificationAll(String notification) {
+		try {
+			logger.info("notification all : " + notification);
+			jPushClient.sendNotificationAll(notification);
+		} catch (Exception e) {
+			logger.info(ExceptionUtils.getStackTrace(e));
+		}
 	}
 
 	public List<String> getTags() throws APIConnectionException, APIRequestException {
