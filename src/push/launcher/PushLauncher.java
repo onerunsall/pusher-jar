@@ -61,6 +61,10 @@ public class PushLauncher {
 		sendNotificationByAlias(Arrays.asList(alias), notification);
 	}
 
+	public void sendNotificationByAlias(String alias, String notification) {
+		sendNotificationByAlias(new String[] { alias }, notification);
+	}
+
 	public void sendNotificationByTag(String[] tags, String notification) {
 		sendNotificationByTag(Arrays.asList(tags), notification);
 	}
@@ -96,12 +100,17 @@ public class PushLauncher {
 		}
 	}
 
-	public List<String> getTags() throws APIConnectionException, APIRequestException {
-		List tags = jPushClient.getTagList().tags;
-		return tags == null ? new ArrayList<String>() : tags;
+	public List<String> getTags() {
+		try {
+			List tags = jPushClient.getTagList().tags;
+			return tags == null ? new ArrayList<String>() : tags;
+		} catch (Exception e) {
+			logger.info(ExceptionUtils.getStackTrace(e));
+			return null;
+		}
 	}
 
-	public boolean tagExist(String tag) throws APIConnectionException, APIRequestException {
+	public boolean tagExist(String tag) {
 		List<String> tags = getTags();
 		return tags.contains(tag);
 	}
