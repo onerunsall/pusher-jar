@@ -1,4 +1,4 @@
-package push.launcher;
+package com.giveup.pusher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,8 +21,8 @@ import cn.jpush.api.push.model.notification.Notification;
  * @Description: TODO
  *
  */
-public class PushLauncher {
-	private static Logger logger = Logger.getLogger(PushLauncher.class);
+public class Pusher {
+	private static Logger logger = Logger.getLogger(Pusher.class);
 
 	JPushClient jPushClient = null;
 	boolean prod = false;
